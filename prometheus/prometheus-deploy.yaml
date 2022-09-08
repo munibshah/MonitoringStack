@@ -37,7 +37,6 @@ spec:
           name: prometheus-config-volume
         - mountPath: /prometheus
           name: prometheus-storage-volume
-          restartPolicy: Always
       initContainers:
       - command:
         - /bin/chmod
