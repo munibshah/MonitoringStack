@@ -50,7 +50,6 @@ spec:
           name: prometheus-config-volume
         - mountPath: /prometheus
           name: prometheus-storage-volume
-          restartPolicy: Always
       volumes:
       - configMap:
           defaultMode: 420
