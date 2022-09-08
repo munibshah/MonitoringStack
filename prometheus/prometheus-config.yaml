@@ -28,18 +28,24 @@ data:
         # scheme defaults to 'http'.
         static_configs:
         - targets: ['localhost:9090']
-      - job_name: 'k8services'
-          kubernetes_sd_configs:
+        
+      - job_name: "kubernetes-apiservers"
+
+        kubernetes_sd_configs:
           - role: endpoints
-          relabel_configs:
-            - source_labels:
-              - __meta_kubernetes_namespace
-              - __meta_kubernetes_service_name
-              action: drop
-              regex: default;kubernetes
-            - source_labels:
-              - __meta_kubernetes_namespace
-              regex: default
-              action: keep
-            - source_labels: [__meta_kubernetes_service_name]
-              target_label: job
+        scheme: https
+
+        tls_config:
+          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+    
+        authorization:
+          credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        relabel_configs:
+          - source_labels:
+              [
+                __meta_kubernetes_namespace,
+                __meta_kubernetes_service_name,
+                __meta_kubernetes_endpoint_port_name,
+              ]
+            action: keep
+            regex: default;kubernetes;https
