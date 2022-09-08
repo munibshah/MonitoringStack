@@ -48,8 +48,6 @@ spec:
         volumeMounts:
         - mountPath: /etc/prometheus
           name: prometheus-config-volume
-        - mountPath: /prometheus
-          name: prometheus-storage-volume
       volumes:
       - configMap:
           defaultMode: 420
