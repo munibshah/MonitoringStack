@@ -38,8 +38,8 @@ spec:
         - mountPath: /prometheus
           name: prometheus-storage-volume
       initContainers:
-        image: busybox
-        name: prometheus-data-permission-fix
+        - name: prometheus-data-permission-fix
+          image: busybox
       volumes:
       - configMap:
           defaultMode: 420
