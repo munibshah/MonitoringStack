@@ -32,7 +32,7 @@ spec:
         ports:
         - name: web
           containerPort: 9090
-       initContainers:
+      initContainers:
         - name: prometheus-data-permission-fix
           image: busybox
           command: ["/bin/chmod","-R","777", "/data"]
