@@ -1,0 +1,82 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@munibshah 
+munibshah
+/
+Monitoring-stack
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+Monitoring-stack/grafana-deployment.yaml
+@munibshah
+munibshah Add files via upload
+Latest commit 835ab60 yesterday
+ History
+ 1 contributor
+39 lines (39 sloc)  995 Bytes
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grafana
+spec:
+  selector:
+    matchLabels:
+      app: grafana
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: grafana
+    spec:
+      containers:
+      - env:
+        - name: GF_INSTALL_PLUGINS
+          value: grafana-piechart-panel, blackmirror1-singlestat-math-panel
+        - name: GF_SECURITY_ADMIN_PASSWORD
+          value: kraken
+        image: grafana/grafana:5.4.3
+        name: grafana
+        volumeMounts:
+        - mountPath: /etc/grafana/provisioning
+          name: grafana-volume
+          subPath: provisioning/
+        - mountPath: /var/lib/grafana/dashboards
+          name: grafana-volume
+          subPath: dashboards/
+        - mountPath: /etc/grafana/grafana.ini
+          name: grafana-volume
+          subPath: grafana.ini
+          readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: grafana-volume
+        hostPath:
+          path: /grafana
+          type: Directory
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
