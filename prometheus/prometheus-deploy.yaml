@@ -38,16 +38,8 @@ spec:
         - mountPath: /prometheus
           name: prometheus-storage-volume
       initContainers:
-      - command:
-        - /bin/chmod
-        - -R
-        - "777"
-        - /etc/prometheus
         image: busybox
         name: prometheus-data-permission-fix
-        volumeMounts:
-        - mountPath: /etc/prometheus
-          name: prometheus-config-volume
       volumes:
       - configMap:
           defaultMode: 420
