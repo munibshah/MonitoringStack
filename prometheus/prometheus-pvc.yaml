@@ -3,6 +3,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: prometheus-data-pvc
 spec:
+  storageClassName: manual
   resources:
     requests:
       storage: 8Gi
