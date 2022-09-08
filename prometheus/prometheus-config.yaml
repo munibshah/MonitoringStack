@@ -28,21 +28,6 @@ data:
         # scheme defaults to 'http'.
         static_configs:
         - targets: ['localhost:9090']
-      - job_name: 'kubelet'
-        kubernetes_sd_configs:
-        - role: node
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          insecure_skip_verify: true  # Required with Minikube.
-      - job_name: 'k8apiserver'
-        kubernetes_sd_configs:
-        - role: endpoints
-        scheme: https
-        tls_config:
-          ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
-          insecure_skip_verify: true  # Required if using Minikube.
-        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       - job_name: 'k8services'
           kubernetes_sd_configs:
           - role: endpoints
