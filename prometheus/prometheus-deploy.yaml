@@ -52,3 +52,4 @@ spec:
       - name: prometheus-storage-volume
         persistentVolumeClaim:
           claimName: prometheus-data-pvc
+      serviceAccountName: prometheus
