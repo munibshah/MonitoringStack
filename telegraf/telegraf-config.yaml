@@ -291,4 +291,4 @@ data:
       is_tag = true
     [[inputs.snmp.field]]
       name = "ifHCInOctets"
-      oid = ".1.3.6.1.2.1.2.2.1.16"
+      oid = ".1.3.6.1.2.1.2.2.1.17"
