@@ -9,4 +9,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/mnt/nfs/influxdb"
+    path: "/var/lib/influxdb"
