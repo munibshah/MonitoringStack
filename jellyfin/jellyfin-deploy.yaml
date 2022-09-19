@@ -41,7 +41,6 @@ spec:
           readOnly: True
         - mountPath: /config
           name: jellyfin-config
-      restartPolicy: Always
       initContainers:
        - name: jellyfin-data-permission-fix
          image: busybox
