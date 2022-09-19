@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-share
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 145Gi
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: synology.local
+    path: "/mnt/hdd1"
