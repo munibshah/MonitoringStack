@@ -1,7 +1,8 @@
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jellyfin
+  name: jellyfin-media
 spec:
   storageClassName: manual
   accessModes:
@@ -9,3 +10,16 @@ spec:
   resources:
     requests:
       storage: 130Gi
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jellyfin-config
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
