@@ -7,12 +7,10 @@ spec:
   storageClassName: manual
   capacity:
     storage: 10Gi
-  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
-  nfs:
-    server: 192.168.1.202
-    path: "/mnt/hdd1"
+  hostPath:
+    path: "/mnt/jellyfin-config"
 ---
 apiVersion: v1
 kind: PersistentVolume
