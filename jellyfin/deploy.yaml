@@ -20,7 +20,7 @@ spec:
         command: ["/bin/sh", "-c", "while true; do ls /mnt/blog-example; sleep 10;done"]
         volumeMounts:
           - mountPath: "/mnt/blog-example"
-            name: blog-example
+            name: jellyfin
       volumes:
         - name: jellyfin
           persistentVolumeClaim:
