@@ -10,5 +10,5 @@ spec:
   accessModes:
     - ReadWriteMany
   nfs:
-    server: synology.local
+    server: 192.168.1.202
     path: "/mnt/hdd1"
