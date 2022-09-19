@@ -44,7 +44,7 @@ spec:
       initContainers:
        - name: jellyfin-data-permission-fix
          image: busybox
-         command: ["/bin/chmod","-R","777", "/config"]
+         command: ["/bin/chmod","-R","777", "/config/logs"]
          volumeMounts:
          - mountPath: /config
            name: jellyfin-config
