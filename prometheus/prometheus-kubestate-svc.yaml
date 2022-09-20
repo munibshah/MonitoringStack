@@ -3,6 +3,7 @@ kind: Service
 metadata:
   labels:
   name: kube-state-metrics
+  namespace: kube-system
   annotations:
       prometheus.io/scrape: 'true'
 spec:
