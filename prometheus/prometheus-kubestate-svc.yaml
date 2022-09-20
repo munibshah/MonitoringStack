@@ -3,8 +3,9 @@ kind: Service
 metadata:
   labels:
   name: kube-state-metrics
+  annotations:
+      prometheus.io/scrape: 'true'
 spec:
-  clusterIP: None
   ports:
   - name: http-metrics
     port: 8080
