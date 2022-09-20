@@ -24,6 +24,12 @@ spec:
           initialDelaySeconds: 5
           timeoutSeconds: 5
         name: kube-state-metrics
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8081
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
         ports:
         - containerPort: 7080
           name: http-metrics
