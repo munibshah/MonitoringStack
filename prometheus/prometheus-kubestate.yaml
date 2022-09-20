@@ -4,6 +4,7 @@ metadata:
   labels:
     app: kube-state-metrics
   name: kube-state-metrics
+  namespace: kube-system
 spec:
   replicas: 1
   selector:
