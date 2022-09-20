@@ -1,4 +1,3 @@
-ansibletarget1@master-node:/mnt/nfs/music/kube-state-metrics-configs$ cat service.yaml 
 apiVersion: v1
 kind: Service
 metadata:
