@@ -9,10 +9,10 @@ metadata:
 spec:
   ports:
   - name: http-metrics
-    port: 8080
-    targetPort: 8080
+    port: 7080
+    targetPort: 7080
   - name: telemetry
-    port: 8081
-    targetPort: 8081
+    port: 7081
+    targetPort: 7081
   selector:
     name: kube-state-metrics
