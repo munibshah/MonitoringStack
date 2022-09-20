@@ -13,7 +13,6 @@ spec:
       labels:
         name: kube-state-metrics
     spec:
-      automountServiceAccountToken: true
       containers:
       - image: k8s.gcr.io/kube-state-metrics/kube-state-metrics:v2.3.0
         livenessProbe:
