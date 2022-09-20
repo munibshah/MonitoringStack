@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: prometheus
+  name: prometheus
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9090"
+        prometheus.io/scrape: "true"
+      labels:
+        app: prometheus
+    spec:
+      containers:
+      - args:
+        - --storage.tsdb.retention=6h
+        - --storage.tsdb.path=/prometheus
+        - --config.file=/etc/prometheus/prometheus.yml
+        image: prom/prometheus
+        name: prometheus
+        ports:
+        - containerPort: 9090
+          name: web
+        volumeMounts:
+        - mountPath: /etc/prometheus
+          name: prometheus-config-volume
+        - mountPath: /prometheus
+          name: prometheus-storage-volume
+      initContainers:
+        - name: prometheus-data-permission-fix
+          image: busybox
+          command: ["/bin/chmod","-R","777", "/prometheus"]
+          volumeMounts:
+          - mountPath: /prometheus
+            name: prometheus-storage-volume
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: prometheus-config
+        name: prometheus-config-volume
+      - name: prometheus-storage-volume
+        persistentVolumeClaim:
+          claimName: prometheus-data-pvc
+      serviceAccountName: prometheus
