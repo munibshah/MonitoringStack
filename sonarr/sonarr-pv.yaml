@@ -13,6 +13,7 @@ spec:
     path: "/mnt/sonarr-config"
 
 ---
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
@@ -21,7 +22,9 @@ spec:
   storageClassName: manual
   capacity:
     storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
   accessModes:
     - ReadWriteMany
-  hostPath:
-    path: "/mnt/sonarr-media"
+  nfs:
+    server: 192.168.1.202
+    path: "/mnt/hdd1"
