@@ -12,7 +12,22 @@ spec:
         app: sonarr
     spec:
       containers:
-      - image: lscr.io/linuxserver/sonarr:latest
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: lscr.io/linuxserver/sonarr:latest
         imagePullPolicy: IfNotPresent
         name: sonarr
         ports:
