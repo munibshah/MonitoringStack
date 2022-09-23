@@ -1,0 +1,42 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr-deployment
+spec:
+  selector:
+    matchLabels:
+      app: sonarr
+  template:
+    metadata:
+      labels:
+        app: sonarr
+    spec:
+      containers:
+        image: lscr.io/linuxserver/sonarr:latest
+        imagePullPolicy: IfNotPresent
+        name: sonarr
+        ports:
+        - containerPort: 8989
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /tv
+          name: sonarr-media
+        - mountPath: /downloads
+          name: sonarr-media
+        - mountPath: /config
+          name: sonarr-config
+      initContainers:
+       - name: sonarr-data-permission-fix
+         image: busybox
+         command: ["/bin/chmod","-R","777", "/config"]
+         volumeMounts:
+         - mountPath: /config
+           name: sonarr-config
+      volumes:
+      - name: sonarr-media
+        persistentVolumeClaim:
+          claimName: sonarr-media
+      - name: sonarr-config
+        persistentVolumeClaim:
+          claimName: sonarr-config
