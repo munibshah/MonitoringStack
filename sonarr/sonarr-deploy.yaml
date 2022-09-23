@@ -12,6 +12,7 @@ spec:
         app: sonarr
     spec:
       containers:
+      - env:
         - name: NODE_NAME
           valueFrom:
             fieldRef:
