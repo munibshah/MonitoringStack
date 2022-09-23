@@ -1,0 +1,29 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jackett-config
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteMany
+  hostPath:
+    path: "/mnt/jackett-config"
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jackett-media
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  persistentVolumeReclaimPolicy: Retain
+  accessModes:
+    - ReadWriteMany
+  nfs:
+    server: 192.168.1.202
+    path: "/mnt/hdd1"
