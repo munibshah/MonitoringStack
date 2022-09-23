@@ -28,7 +28,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: lscr.io/linuxserver/sabnzd:latest
+        image: lscr.io/linuxserver/sabnzbd:latest
         imagePullPolicy: IfNotPresent
         name: sabnzd
         ports:
