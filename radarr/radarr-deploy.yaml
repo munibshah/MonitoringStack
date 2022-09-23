@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: radarr-deployment
+spec:
+  selector:
+    matchLabels:
+      app: radarr
+  template:
+    metadata:
+      labels:
+        app: radarr
+    spec:
+      containers:
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: POD_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.name
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: metadata.namespace
+        image: lscr.io/linuxserver/radarr:latest
+        imagePullPolicy: IfNotPresent
+        name: radarr
+        ports:
+        - containerPort: 7878
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /movies
+          name: radarr-media
+        - mountPath: /downloads
+          name: radarr-media
+        - mountPath: /config
+          name: radarr-config
+      volumes:
+      - name: radarr-media
+        persistentVolumeClaim:
+          claimName: sonarr-media
+      - name: radarr-config
+        persistentVolumeClaim:
+          claimName: radarr-config
