@@ -12,7 +12,7 @@ spec:
         app: sonarr
     spec:
       containers:
-        image: lscr.io/linuxserver/sonarr:latest
+      - image: lscr.io/linuxserver/sonarr:latest
         imagePullPolicy: IfNotPresent
         name: sonarr
         ports:
@@ -25,13 +25,6 @@ spec:
           name: sonarr-media
         - mountPath: /config
           name: sonarr-config
-      initContainers:
-       - name: sonarr-data-permission-fix
-         image: busybox
-         command: ["/bin/chmod","-R","777", "/config"]
-         volumeMounts:
-         - mountPath: /config
-           name: sonarr-config
       volumes:
       - name: sonarr-media
         persistentVolumeClaim:
