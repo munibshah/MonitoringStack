@@ -32,8 +32,8 @@ spec:
         imagePullPolicy: IfNotPresent
         name: radarr
         securityContext:
-          runAsUser: abc
-          runAsGroup: 3000
+          runAsUser: 1000
+          runAsGroup: 1000
 
         ports:
         - containerPort: 7878
