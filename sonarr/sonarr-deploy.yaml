@@ -41,13 +41,6 @@ spec:
           name: sonarr-media
         - mountPath: /config
           name: sonarr-config
-      initContainers:
-        - name: prometheus-data-permission-fix
-          image: busybox
-          command: ["/bin/chmod","-R","777", "/downloads"]
-          volumeMounts:
-          - mountPath: /downloads
-            name: sonarr-media
       volumes:
       - name: sonarr-media
         persistentVolumeClaim:
