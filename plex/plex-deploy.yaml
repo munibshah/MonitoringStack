@@ -14,28 +14,8 @@ spec:
     spec:
       containers:
       - env:
-<<<<<<< HEAD
         - name: PLEX_CLAIM
           value: claim-t7iD9MYyxMbSEbCfoovA
-=======
-        - name: NODE_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: spec.nodeName
-        - name: POD_NAME
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.name
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              apiVersion: v1
-              fieldPath: metadata.namespace
-        - PLEX_CLAIM: CLAIM
-          value: "claim-t7iD9MYyxMbSEbCfoovA"
->>>>>>> aa68cb55653236b6df9a5073001a43fabb19295a
         image: plexinc/pms-docker
         imagePullPolicy: IfNotPresent
         name: plex
