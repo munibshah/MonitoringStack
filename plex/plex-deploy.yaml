@@ -29,6 +29,8 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
+        - PLEX_CLAIM: CLAIM
+          value: "claim-t7iD9MYyxMbSEbCfoovA"
         image: plexinc/pms-docker
         imagePullPolicy: IfNotPresent
         name: plex
