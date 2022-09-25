@@ -3,8 +3,6 @@ kind: Deployment
 metadata:
   name: radarr-deployment
 spec:
-  securityContext:
-    fsGroup: 1000
   selector:
     matchLabels:
       app: radarr
