@@ -29,7 +29,7 @@ spec:
             fieldRef:
               apiVersion: v1
               fieldPath: metadata.namespace
-        image: lscr.io/linuxserver/plex:latest
+        image: plexinc/pms-docker
         imagePullPolicy: IfNotPresent
         name: plex
         ports:
