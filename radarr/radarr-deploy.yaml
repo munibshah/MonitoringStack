@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: radarr-deployment
 spec:
+  securityContext:
+    fsGroup: 1000
   selector:
     matchLabels:
       app: radarr
@@ -31,8 +33,6 @@ spec:
         image: lscr.io/linuxserver/radarr:latest
         imagePullPolicy: IfNotPresent
         name: radarr
-        securityContext:
-          fsGroup: 1000
         ports:
         - containerPort: 7878
           protocol: TCP
