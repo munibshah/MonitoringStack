@@ -44,7 +44,7 @@ spec:
       volumes:
       - name: nzbhydra2-media
         persistentVolumeClaim:
-          claimName: sonarr-media
+          claimName: nzbhydra2-media
       - name: nzbhydra2-config
         persistentVolumeClaim:
           claimName: nzbhydra2-config

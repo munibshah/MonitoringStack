@@ -15,7 +15,7 @@ spec:
       containers:
       - env:
         - name: PLEX_CLAIM
-          value: claim-bykuCA6w2zzGwLM4UWus
+          value: claim-tHk-Up5AJBnGgfxxVvE3
         image: plexinc/pms-docker
         imagePullPolicy: IfNotPresent
         name: plex
