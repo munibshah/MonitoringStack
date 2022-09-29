@@ -10,63 +10,27 @@ image:
 #
 deployment:
   enabled: true
-  # Can be either Deployment or DaemonSet
   kind: Deployment
-  # Number of pods of the deployment (only applies when kind == Deployment)
   replicas: 1
-  # Number of old history to retain to allow rollback (If not set, default Kubernetes value is set to 10)
-  # revisionHistoryLimit: 1
-  # Amount of time (in seconds) before Kubernetes will send the SIGKILL signal if Traefik does not shut down
   terminationGracePeriodSeconds: 60
-  # The minimum number of seconds Traefik needs to be up and running before the DaemonSet/Deployment controller considers it available
   minReadySeconds: 0
-  # Additional deployment annotations (e.g. for jaeger-operator sidecar injection)
   annotations: {}
-  # Additional deployment labels (e.g. for filtering deployment by custom labels)
   labels: {}
-  # Additional pod annotations (e.g. for mesh injection or prometheus scraping)
   podAnnotations: {}
-  # Additional Pod labels (e.g. for filtering Pod by custom labels)
   podLabels: {}
-  # Additional containers (e.g. for metric offloading sidecars)
   additionalContainers: []
-    # https://docs.datadoghq.com/developers/dogstatsd/unix_socket/?tab=host
-    # - name: socat-proxy
-    # image: alpine/socat:1.0.5
-    # args: ["-s", "-u", "udp-recv:8125", "unix-sendto:/socket/socket"]
-    # volumeMounts:
-    #   - name: dsdsocket
-    #     mountPath: /socket
-  # Additional volumes available for use with initContainers and additionalContainers
+    
   additionalVolumes: []
-    # - name: dsdsocket
-    #   hostPath:
-    #     path: /var/run/statsd-exporter
-  # Additional initContainers (e.g. for setting file permission as shown below)
+    
   initContainers: []
-    # The "volume-permissions" init container is required if you run into permission issues.
-    # Related issue: https://github.com/traefik/traefik/issues/6972
-    # - name: volume-permissions
-    #   image: busybox:1.31.1
-    #   command: ["sh", "-c", "chmod -Rv 600 /data/*"]
-    #   volumeMounts:
-    #     - name: data
-    #       mountPath: /data
-  # Use process namespace sharing
+    
   shareProcessNamespace: false
-  # Custom pod DNS policy. Apply if `hostNetwork: true`
-  # dnsPolicy: ClusterFirstWithHostNet
-  # Additional imagePullSecrets
+  
   imagePullSecrets: []
-    # - name: myRegistryKeySecretName
-
-# Pod disruption budget
+   
 podDisruptionBudget:
   enabled: false
-  # maxUnavailable: 1
-  # maxUnavailable: 33%
-  # minAvailable: 0
-  # minAvailable: 25%
+  
 
 # Use ingressClass. Ignored if Traefik version < 2.3 / kubernetes < 1.18.x
 ingressClass:
@@ -91,21 +55,11 @@ experimental:
     enabled: false
   kubernetesGateway:
     enabled: false
-    # certificate:
-    #   group: "core"
-    #   kind: "Secret"
-    #   name: "mysecret"
-    # By default, Gateway would be created to the Namespace you are deploying Traefik to.
-    # You may create that Gateway in another namespace, setting its name below:
-    # namespace: default
-
-# Create an IngressRoute for the dashboard
+    
 ingressRoute:
   dashboard:
-    enabled: true
-    # Additional ingressRoute annotations (e.g. for kubernetes.io/ingress.class)
+    enabled: false
     annotations: {}
-    # Additional ingressRoute labels (e.g. for filtering IngressRoute by custom labels)
     labels: {}
 
 rollingUpdate:
@@ -136,7 +90,7 @@ providers:
     allowCrossNamespace: false
     allowExternalNameServices: false
     allowEmptyServices: false
-    # ingressClass: traefik-internal
+    ingressClass: traefik-external
     # labelSelector: environment=production,method=traefik
     namespaces: []
       # - "default"
@@ -242,8 +196,12 @@ tracing: {}
   #   prioritySampling: false
 
 globalArguments:
-  - "--global.checknewversion"
-  - "--global.sendanonymoususage"
+  - "--global.checknewversion=false"
+  - "--global.sendanonymoususage=false"
+
+additionalArguments:
+  - "--serversTransport.insecureSkipVerify=true"
+  - "--log.level=INFO"
 
 #
 # Configure Traefik static configuration
@@ -281,61 +239,21 @@ ports:
   # liveness probes, but you can adjust its config to your liking
   traefik:
     port: 9000
-    # Use hostPort if set.
-    # hostPort: 9000
-    #
-    # Use hostIP if set. If not set, Kubernetes will default to 0.0.0.0, which
-    # means it's listening on all your interfaces and all your IPs. You may want
-    # to set this value if you need traefik to listen on specific interface
-    # only.
-    # hostIP: 192.168.100.10
-
-    # Override the liveness/readiness port. This is useful to integrate traefik
-    # with an external Load Balancer that performs healthchecks.
-    # healthchecksPort: 9000
-
-    # Defines whether the port is exposed if service.type is LoadBalancer or
-    # NodePort.
-    #
-    # You SHOULD NOT expose the traefik port on production deployments.
-    # If you want to access it from outside of your cluster,
-    # use `kubectl port-forward` or create a secure ingress
-    expose: false
-    # The exposed port for this service
+    expose: true
     exposedPort: 9000
-    # The port protocol (TCP/UDP)
     protocol: TCP
   web:
     port: 8000
-    # hostPort: 8000
     expose: true
     exposedPort: 80
-    # The port protocol (TCP/UDP)
     protocol: TCP
-    # Use nodeport if set. This is useful if you have configured Traefik in a
-    # LoadBalancer
-    # nodePort: 32080
-    # Port Redirections
-    # Added in 2.2, you can make permanent redirects via entrypoints.
-    # https://docs.traefik.io/routing/entrypoints/#redirection
-    # redirectTo: websecure
   websecure:
     port: 8443
-    # hostPort: 8443
     expose: true
     exposedPort: 443
-    # The port protocol (TCP/UDP)
     protocol: TCP
-    # nodePort: 32443
-    # Enable HTTP/3.
-    # Requires enabling experimental http3 feature and tls.
-    # Note that you cannot have a UDP entrypoint with the same port.
-    # http3: true
-    # Set TLS at the entrypoint
-    # https://doc.traefik.io/traefik/routing/entrypoints/#tls
     tls:
       enabled: false
-      # this is the name of a TLSOption definition
       options: ""
       certResolver: ""
       domains: []
@@ -397,9 +315,9 @@ service:
   labels: {}
   # Additional entries here will be added to the service spec.
   # Cannot contain type, selector or ports entries.
-  spec: {}
+  spec: 
     # externalTrafficPolicy: Cluster
-    # loadBalancerIP: "1.2.3.4"
+    # loadBalancerIP: []
     # clusterIP: "2.3.4.5"
   loadBalancerSourceRanges: []
     # - 192.168.0.1/32
